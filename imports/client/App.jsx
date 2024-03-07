@@ -4,7 +4,7 @@ import { LoginForm } from './components/LoginForm';
 import { RegisterForm } from './components/RegisterForm';
 import { SondageForm } from './components/SondageForm';
 import SondagesCollection from '../api/SondagesCollection';
-import { Sondage } from './components/Sondage';
+import { Sondage } from './Sondage';
 
 export const App = () => {
     let [hideCompleted, setHideCompleted] = useState(0);
