@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from "simpl-schema";
 import 'meteor/aldeed:collection2/static';
+import crypto from 'crypto';
 
 // Création d'une collection Sondages
 const SondagesCollection = new Mongo.Collection('sondages');
@@ -16,7 +17,10 @@ const SondageSchema = new SimpleSchema({
         optional: true,
     },
     'questions.$': Object,
-    'questions.$.question_id': Object,
+    'questions.$.question_id': {
+        type: String,
+        optional: true,
+    },
     'questions.$.intitule': {
         type: String,
         optional: true,
@@ -70,7 +74,7 @@ if (Meteor.isServer) {
                     nom: nomSondage,
                     createur: Meteor.userId(),
                     questions:[ {
-                        question_id: new Mongo.ObjectID(),
+                        question_id: "test1",
                         intitule: questionsSondage,
                         type: typeChoix,
                         createdAt: new Date(),

@@ -5,6 +5,7 @@ import { RegisterForm } from './components/RegisterForm';
 import { SondageForm } from './components/SondageForm';
 import SondagesCollection from '../api/SondagesCollection';
 import { Sondage } from './Sondage';
+import {SondageItem} from '../client/components/SondageItem';
 
 export const App = () => {
     let [hideCompleted, setHideCompleted] = useState(0);

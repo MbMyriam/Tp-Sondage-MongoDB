@@ -21,6 +21,7 @@ export const Sondage = () => {
         <h1>ok</h1>
     }
 
+    console.log(id)
     return(
         <div>
           {user ? (
