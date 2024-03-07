@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from "simpl-schema";
+import 'meteor/aldeed:collection2/static';
 
 // Création d'une collection Sondages
 const SondagesCollection = new Mongo.Collection('sondages');
@@ -15,10 +16,6 @@ const SondageSchema = new SimpleSchema({
         optional: true,
     },
     'questions.$': Object,
-    'questions.$.id': {
-        type: String,
-        optional: false,
-    },
     'questions.$.intitule': {
         type: String,
         optional: true,
@@ -31,13 +28,14 @@ const SondageSchema = new SimpleSchema({
         type: Date,
         optional: false,
     },
-    réponses: {
+    reponses: {
         type: Array,
         optional: true,
     },
-    'reponses.$': {
+    'reponses.$': Object,
+    'reponses.$.proposition': {
         type: String,
-        optional: true,
+        optional: false,
     },
     createdAt: Date
 });
@@ -65,12 +63,19 @@ if (Meteor.isServer) {
 
     //Méthode côté serveur qu'on peut appeler côté client insert
     Meteor.methods({
-        insertNewSondage(nomSondage, sondageCreateurId, questionsSondage) {
+        insertNewSondage(nomSondage, questionsSondage, typeChoix, reponsesSondage) {
             SondagesCollection.insert({
                 sondage: {
                     nom: nomSondage,
-                    createur: sondageCreateurId,
-                    questions: questionsSondage,
+                    createur: Meteor.userId(),
+                    questions:[ {
+                        intitule: questionsSondage,
+                        type: typeChoix,
+                        createdAt: new Date(),
+                    }],
+                    reponses: [{
+                        proposition: reponsesSondage
+                    }],
                     createdAt: new Date(),
                 }
             });
