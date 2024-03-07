@@ -16,6 +16,7 @@ const SondageSchema = new SimpleSchema({
         optional: true,
     },
     'questions.$': Object,
+    'questions.$.question_id': Object,
     'questions.$.intitule': {
         type: String,
         optional: true,
@@ -69,6 +70,7 @@ if (Meteor.isServer) {
                     nom: nomSondage,
                     createur: Meteor.userId(),
                     questions:[ {
+                        question_id: new Mongo.ObjectID(),
                         intitule: questionsSondage,
                         type: typeChoix,
                         createdAt: new Date(),
